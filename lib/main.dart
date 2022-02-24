@@ -35,6 +35,51 @@ class _CalculationState extends State<Calculator>
 {
   int m_result = 0;
 
+  Widget getButton({required String text, required VoidCallback onClick, Color backgroundColour = Colors.white, Color labelColour = Colors.black}){
+    return CalculatorButton(
+        label: text,
+        onClick: onClick,
+        size: 90,
+        bgColour: backgroundColour,
+        labelColour: labelColour,
+    );
+  }
+
+  void numberPressed(int number)
+  {
+
+  }
+
+  void operatorPressed(String operator)
+  {
+
+  }
+
+  void equalsPressed()
+  {
+
+  }
+
+  void isPrimePressed()
+  {
+
+  }
+
+  void clear()
+  {
+
+  }
+
+  void clearEntry()
+  {
+
+  }
+
+  void copyToClipboard()
+  {
+
+  }
+
   @override
   Widget build(BuildContext context)
   {
@@ -44,13 +89,41 @@ class _CalculationState extends State<Calculator>
         Row( // Rows are likewise in the horizontal direction
           children: [
             // Here is the bottom of the first row
-            CalculatorButton(
-                label: "BUTTON",
-                onClick: () => {
-
-                }, // onClick
-                size: 90
-            )
+            getButton(text: 'C', onClick: () => clear(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+            getButton(text: 'CE', onClick: () => clearEntry(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+            getButton(text: 'COPY', onClick: () => copyToClipboard(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+            getButton(text: 'Prime?', onClick: () => isPrimePressed(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+          ],
+        ),
+        Row( // Rows are likewise in the horizontal direction
+          children: [
+            getButton(text: '7', onClick: () => numberPressed(7)),
+            getButton(text: '8', onClick: () => numberPressed(8)),
+            getButton(text: '9', onClick: () => numberPressed(9)),
+            getButton(text: 'X', onClick: () => operatorPressed("X"), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+          ],
+        ),
+        Row( // Rows are likewise in the horizontal direction
+          children: [
+            getButton(text: '4', onClick: () => numberPressed(4)),
+            getButton(text: '5', onClick: () => numberPressed(5)),
+            getButton(text: '6', onClick: () => numberPressed(6)),
+            getButton(text: '/', onClick: () => operatorPressed("/"), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+          ],
+        ),
+        Row( // Rows are likewise in the horizontal direction
+          children: [
+            getButton(text: '1', onClick: () => numberPressed(1)),
+            getButton(text: '2', onClick: () => numberPressed(2)),
+            getButton(text: '3', onClick: () => numberPressed(3)),
+            getButton(text: '+', onClick: () => operatorPressed("+"), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+          ],
+        ),
+        Row( // Rows are likewise in the horizontal direction
+          children: [
+            getButton(text: '=', onClick: () => equalsPressed(), backgroundColour: Colors.deepPurple, labelColour: Colors.white),
+            getButton(text: '0', onClick: () => numberPressed(0)),
+            getButton(text: '-', onClick: () => operatorPressed("-")),
           ],
         )
       ]

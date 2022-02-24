@@ -38,7 +38,16 @@ class _CalculationState extends State<Calculator>
   @override
   Widget build(BuildContext context)
   {
-    return ResultDisplay(text: '0');
+    return Column( // Columns allow us to place widgets vertically
+      children: [
+        ResultDisplay(text: '0'),
+        Row( // Rows are likewise in the horizontal direction
+          children: [
+            // Here is the bottom of the first row
+          ],
+        )
+      ]
+    );
   }
 }
 

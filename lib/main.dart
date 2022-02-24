@@ -108,7 +108,7 @@ class CalculatorButton extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return Padding(
+    /*return Padding(
       padding: EdgeInsets.all(6), // Creates a margin between all of the buttons of the calculator
       child: Container(
         width: size,
@@ -144,7 +144,47 @@ class CalculatorButton extends StatelessWidget
           )
         )
       )
+    );*/
+
+    return Padding(
+      padding: EdgeInsets.all(6),
+      child: Ink(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(1, 1),
+              blurRadius: 2
+            ),
+          ],
+          borderRadius: BorderRadius.all(
+            Radius.circular(size / 2)
+          ),
+          color: bgColour
+        ),
+        child: InkWell(
+          customBorder: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(size / 2),
+            ),
+          ),
+          onTap: onClick,
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 24,
+                color: labelColour
+              ),
+            ),
+          ),
+        )
+      ),
     );
   }
+
+
 
 }

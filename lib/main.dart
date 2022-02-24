@@ -44,6 +44,13 @@ class _CalculationState extends State<Calculator>
         Row( // Rows are likewise in the horizontal direction
           children: [
             // Here is the bottom of the first row
+            CalculatorButton(
+                label: "BUTTON",
+                onClick: () => {
+
+                }, // onClick
+                size: 90
+            )
           ],
         )
       ]
@@ -80,4 +87,64 @@ class ResultDisplay extends StatelessWidget
         )
     );
   }
+}
+
+class CalculatorButton extends StatelessWidget
+{
+  CalculatorButton({
+    required this.label,
+    required this.onClick,
+    required this.size,
+    this.bgColour = Colors.black,
+    this.labelColour = Colors.white
+  });
+
+  String label = ""; // What's going to be displayed on the button
+  VoidCallback onClick; // The callback function to be executed when the button is pressed
+  double size = 0.0; // The size of the button
+  Color bgColour;
+  Color labelColour;
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Padding(
+      padding: EdgeInsets.all(6), // Creates a margin between all of the buttons of the calculator
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration( // Allows us to style the boxes, adding borders, drop-shadow, etc.
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey,
+              offset: Offset(1, 1),
+              blurRadius: 2
+            ),
+          ],
+
+          borderRadius: BorderRadius.all(
+            Radius.circular(size / 2)
+          ),
+          color: bgColour
+        ),
+
+        child: TextButton(
+          style: TextButton.styleFrom(
+            shape: CircleBorder() // Make the button circular
+          ),
+          onPressed: onClick,
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 24,
+                color: labelColour
+              )
+            )
+          )
+        )
+      )
+    );
+  }
+
 }

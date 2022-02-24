@@ -140,7 +140,12 @@ class _CalculationState extends State<Calculator>
 
   void clear()
   {
-
+    setState(() {
+      result = null;
+      operator = null;
+      firstOperand = null;
+      secondOperand = null;
+    });
   }
 
   void clearEntry()

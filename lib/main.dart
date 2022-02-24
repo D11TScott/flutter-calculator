@@ -33,7 +33,10 @@ class Calculator extends StatefulWidget
 
 class _CalculationState extends State<Calculator>
 {
-  int m_result = 0;
+  double? result; // ? operator means it's nullable
+  double? firstOperand;
+  double? secondOperand;
+  String? operator;
 
   Widget getButton({required String text, required VoidCallback onClick, Color backgroundColour = Colors.white, Color labelColour = Colors.black}){
     return CalculatorButton(
@@ -45,19 +48,89 @@ class _CalculationState extends State<Calculator>
     );
   }
 
-  void numberPressed(int number)
+  void numberPressed(double number)
   {
+    setState(() {
+      if(result != null)
+      {
+        result = null;
+        firstOperand = number;
+        return;
+      }
+
+      if(firstOperand == null)
+      {
+        firstOperand = number;
+        return;
+      }
+
+      if(operator == null)
+      {
+        // Concatenate the newly-pressed number to the previous value if the operator wasn't pressed
+        firstOperand = double.parse('$firstOperand$number');
+        return;
+      }
+
+      if(secondOperand == null)
+      {
+        secondOperand = number;
+        return;
+      }
+
+      secondOperand = double.parse('$secondOperand$number');
+    });
 
   }
 
   void operatorPressed(String operator)
   {
-
+    setState(() {
+      // Treat it as a 0 if there is no number in the dialog
+      if(firstOperand == null){
+        firstOperand = 0;
+      }
+      this.operator = operator;
+    });
   }
 
   void equalsPressed()
   {
+    // Don't calculate the result if there is only one number or the operation button hasn't been pressed
+    if(operator == null || firstOperand == null || secondOperand == null)
+    {
+      return;
+    }
 
+    // Because ? is nullable, operators can't be used, cast to non-nullable types
+    double first = firstOperand as double;
+    double second = secondOperand as double;
+
+    // setState() rebuilds the widget which shows the changes in the UI
+    setState(() {
+      switch(operator){
+        case '+':
+            result = first + second;
+          break;
+        case '/':
+          if(second == 0){
+            return;
+          }
+          result = first / second;
+          break;
+        case 'x':
+          result = first * second;
+          break;
+        case '-':
+          result = first - second;
+          break;
+      }
+
+      // Display the result and then reset the values
+      firstOperand = result;
+      operator = null;
+      secondOperand = null;
+      result = null;
+    });
   }
 
   void isPrimePressed()

@@ -33,9 +33,9 @@ class Calculator extends StatefulWidget
 
 class _CalculationState extends State<Calculator>
 {
-  double? result; // ? operator means it's nullable
-  double? firstOperand;
-  double? secondOperand;
+  int? result; // ? operator means it's nullable
+  int? firstOperand;
+  int? secondOperand;
   String? operator;
 
   Widget getButton({required String text, required VoidCallback onClick, Color backgroundColour = Colors.white, Color labelColour = Colors.black}){
@@ -48,7 +48,32 @@ class _CalculationState extends State<Calculator>
     );
   }
 
-  void numberPressed(double number)
+  String getDisplayText()
+  {
+    if(result != null)
+    {
+      return '$result';
+    }
+
+    if(secondOperand != null)
+    {
+      return '$firstOperand $operator $secondOperand';
+    }
+
+    if(operator != null)
+    {
+      return '$firstOperand $operator';
+    }
+
+    if(firstOperand != null)
+    {
+      return '$firstOperand';
+    }
+
+    return '0';
+  }
+
+  void numberPressed(int number)
   {
     setState(() {
       if(result != null)
@@ -67,7 +92,7 @@ class _CalculationState extends State<Calculator>
       if(operator == null)
       {
         // Concatenate the newly-pressed number to the previous value if the operator wasn't pressed
-        firstOperand = double.parse('$firstOperand$number');
+        firstOperand = int.parse('$firstOperand$number');
         return;
       }
 
@@ -77,7 +102,7 @@ class _CalculationState extends State<Calculator>
         return;
       }
 
-      secondOperand = double.parse('$secondOperand$number');
+      secondOperand = int.parse('$secondOperand$number');
     });
 
   }
@@ -102,8 +127,8 @@ class _CalculationState extends State<Calculator>
     }
 
     // Because ? is nullable, operators can't be used, cast to non-nullable types
-    double first = firstOperand as double;
-    double second = secondOperand as double;
+    int first = firstOperand as int;
+    int second = secondOperand as int;
 
     // setState() rebuilds the widget which shows the changes in the UI
     setState(() {
@@ -115,9 +140,9 @@ class _CalculationState extends State<Calculator>
           if(second == 0){
             return;
           }
-          result = first / second;
+          result = first ~/ second;
           break;
-        case 'x':
+        case 'X':
           result = first * second;
           break;
         case '-':
@@ -163,7 +188,9 @@ class _CalculationState extends State<Calculator>
   {
     return Column( // Columns allow us to place widgets vertically
       children: [
-        ResultDisplay(text: '0'),
+        ResultDisplay(
+            text: getDisplayText()
+        ),
         Row( // Rows are likewise in the horizontal direction
           children: [
             // Here is the bottom of the first row

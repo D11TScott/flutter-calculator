@@ -158,8 +158,64 @@ class _CalculationState extends State<Calculator>
     });
   }
 
-  void isPrimePressed()
+  bool isPrime(int num)
   {
+    for(int i = 1; i < num / 2; i++)
+    {
+      if(num % i == 0)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Widget isPrimePressed()
+  {
+    if(firstOperand == null || secondOperand != null)
+    {
+      return buildIsPrimePopupDialog(context, 0, false);
+    }
+
+    return buildIsPrimePopupDialog(context, firstOperand as int, true);
+  }
+
+  Widget buildIsPrimePopupDialog(BuildContext context, int number, bool valid)
+  {
+    String textToDisplay = isPrime(number) ? "$number is Prime" : "$number is not Prime";
+
+    if(!valid)
+    {
+      textToDisplay = "ONLY ENTER 1 NUMBER";
+    }
+
+    return AlertDialog(
+      title: Text('Is It Prime?'),
+      content: Column(
+        children: [
+          Text(
+              textToDisplay,
+            style: TextStyle(
+              color: Colors.black
+            ),
+          ),
+
+        ],
+      ),
+      actions: <Widget>[
+        new TextButton(
+            onPressed: (){
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              'Close',
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            )
+        )
+      ],
+    );
 
   }
 
@@ -197,7 +253,13 @@ class _CalculationState extends State<Calculator>
             getButton(text: 'C', onClick: () => clear(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
             getButton(text: 'CE', onClick: () => clearEntry(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
             getButton(text: 'COPY', onClick: () => copyToClipboard(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
-            getButton(text: 'Prime?', onClick: () => isPrimePressed(), backgroundColour: Colors.blueAccent, labelColour: Colors.white),
+            getButton(text: 'Prime?', onClick: (){
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => isPrimePressed(),
+              );
+            },
+                backgroundColour: Colors.blueAccent, labelColour: Colors.white),
           ],
         ),
         Row( // Rows are likewise in the horizontal direction

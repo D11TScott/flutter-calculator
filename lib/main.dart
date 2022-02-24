@@ -16,7 +16,9 @@ class CalculatorApp extends StatelessWidget
         return MaterialApp(
           title: 'Calculator',
           home: Scaffold( // A scaffold lets us work with the fonts, but will also provides an API
-            body: Calculator() // Calculator will contain the screen that holds all the UI elements
+            body: SafeArea(
+              child: Calculator() // Calculator will contain the screen that holds all the UI elements
+            )
           ),
         );
   }
@@ -51,6 +53,7 @@ class ResultDisplay extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    // In here, we're building the display of the calculator at the top of the window
     return Container(
         width: double.infinity,
         height: 80,

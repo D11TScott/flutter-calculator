@@ -36,6 +36,35 @@ class _CalculationState extends State<Calculator>
   @override
   Widget build(BuildContext context)
   {
-    return Container();
+    return ResultDisplay(text: '0');
+  }
+}
+
+class ResultDisplay extends StatelessWidget
+{
+  ResultDisplay(
+    {
+      required this.text
+    }
+  );
+
+  int m_result = 0;
+  String text = "";
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Container(
+      width: double.infinity,
+      height: 80,
+      color: Colors.black,
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 34
+        ),
+      )
+    );
   }
 }
